@@ -1,12 +1,28 @@
 console.log("spaceScroller.js");
 var count = 20;
 
-var path = new Path.Rectangle({
+var trailPath = new Path.Rectangle({
   size: [5, 30],
-  fillColor: "white"
+  fillColor: {
+    gradient: {
+      stops: [new Color(1, 1, 1, 0), new Color(1, 1, 1)]
+    },
+    origin: [0, 0],
+    destination: [0, 30]
+  }
 });
 
-var symbol = new Symbol(path);
+var boulderPath = new Path.Rectangle({
+  size: [10, 10],
+  fillColor: "red",
+  point: [0,0],
+});
+
+var trail = new Symbol(trailPath);
+var boulder = new Symbol(boulderPath);
+
+// var asteroid = new Group([boulderPath,trailPath]);
+
 var max = 2;
 var min = 1;
 
@@ -14,8 +30,11 @@ var min = 1;
 for (var i = 0; i < count; i++) {
   // The center position is a random point in the view:
   var center = Point.random() * view.size;
-  var placedSymbol = symbol.place(center);
-  placedSymbol.scale((i / count) * (max - min) + min);
+
+
+  var placedTrail = trail.place(center);
+  placedTrail.scale((i / count) * (max - min) + min);
+  placedTrail.addChild(boulder);
 }
 
 var detectionPath = new Path.Rectangle({
@@ -24,7 +43,6 @@ var detectionPath = new Path.Rectangle({
   // fillColor: 'white'
 });
 
-console.log("svg?", detectionPath);
 var player = new Group([detectionPath]);
 player.importSVG(
   "./src/cleanHornet.svg",
@@ -37,7 +55,6 @@ player.importSVG(
     }
   }
 );
-console.log("player", player);
 
 var tempo = 10;
 
