@@ -28,7 +28,6 @@ var tempo = 10;
 
 
 function onFrame(event) {
-  console.log('event');
   
   for (var i = 0; i < count; i++) {
     var item = project.activeLayer.children[i];
