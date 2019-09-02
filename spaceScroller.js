@@ -1,3 +1,4 @@
+console.log('spaceScroller.js');
 var count = 20;
 
 var path = new Path.Rectangle({
@@ -25,10 +26,10 @@ var player = new Path.Rectangle({
 
 var tempo = 10;
 
-var centeri = Point.random() * view.size;
-symbol.place(centeri)
 
 function onFrame(event) {
+  console.log('event');
+  
   for (var i = 0; i < count; i++) {
     var item = project.activeLayer.children[i];
 

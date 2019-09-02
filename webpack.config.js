@@ -5,7 +5,7 @@
 module.exports = {
   mode: 'development',
   entry: {
-    app: './app.js',
+    app: './src/app.js',
     // print: './src/print.js'
   },
 //  devtool: 'inline-source-map',
