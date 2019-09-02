@@ -1,0 +1,28 @@
+{
+  "name": "space-scroller",
+  "version": "1.0.0",
+  "description": "Bringing my Profile pic to live",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --open",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jensgerntholtz/space-scroller.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jensgerntholtz/space-scroller/issues"
+  },
+  "homepage": "https://github.com/jensgerntholtz/space-scroller#readme",
+  "devDependencies": {
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
+  }
+}

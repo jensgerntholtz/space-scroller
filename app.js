@@ -2,7 +2,7 @@ var count = 20;
 
 var path = new Path.Rectangle({
   size: [5, 30],
-  fillColor: 'black'
+  fillColor: 'white'
 });
 
 var symbol = new Symbol(path);
@@ -20,10 +20,13 @@ for (var i = 0; i < count; i++) {
 var player = new Path.Rectangle({
   point: view.center,
   size: [80, 100],
-  fillColor: 'black'
+  fillColor: 'white'
 });
 
 var tempo = 10;
+
+var centeri = Point.random() * view.size;
+symbol.place(centeri)
 
 function onFrame(event) {
   for (var i = 0; i < count; i++) {
