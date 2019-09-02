@@ -2,5 +2,5 @@
 Bringing my Profile pic to live
 
 # Dependencies
-
-paper.js
+Paper.js (via cdn)
+webpack
