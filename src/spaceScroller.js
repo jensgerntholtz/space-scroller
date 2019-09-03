@@ -1,3 +1,4 @@
+import Paper from "paper";
 console.log("spaceScroller.js");
 var count = 20;
 
@@ -30,8 +31,6 @@ for (var i = 0; i < count; i++) {
 
 
   var placedBoulder = boulder.place([0,0]);
-  console.log("center", center);
-  console.log("placedBoulder.position", placedBoulder.position);
   var placedTrail = trail.place([0, -15]);
   var asteroidGroup = new Group([placedBoulder, placedTrail]);
   asteroidGroup.scale((i / count) * (max - min) + min);
@@ -72,6 +71,8 @@ function onFrame(event) {
     }
 
     if (detectionPath.intersects(item)) {
+      // console.log('HIT!!!');
+      // view.pause();
       var detectionPathDistance = detectionPath.position.getDistance(
         item.position
       );
