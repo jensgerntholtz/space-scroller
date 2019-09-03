@@ -31,9 +31,10 @@ window.onload = () => {
   // Place the instances of the symbol:
   for (var i = 0; i < count; i++) {
     // The center position is a random point in the view:
-    var center = Paper.Point.random() * Paper.view.size;
-
-    console.log(Paper.view.size);
+    var center = [
+      Paper.Point.random().x * Paper.view.size.width,
+      Paper.Point.random().y * Paper.view.size.height
+    ];
 
     var placedBoulder = boulder.place([0, 0]);
     var placedTrail = trail.place([0, -15]);

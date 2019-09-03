@@ -1,7 +1,6 @@
 console.log('app.js');
 var scope;
 import SpaceScroller from './spaceScroller';
-
 // function runCode() {
 //   // Update the hash each time the code is run also.
 //   updateHash();
