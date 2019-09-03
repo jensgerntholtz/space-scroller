@@ -12,11 +12,8 @@ var trailPath = new Path.Rectangle({
   }
 });
 
-var boulderPath = new Path.Rectangle({
-  size: [10, 10],
-  fillColor: "red",
-  point: [0,0],
-});
+var boulderPath = new Shape.Circle(new Point(0, 0), 3);
+boulderPath.fillColor = "white";
 
 var trail = new Symbol(trailPath);
 var boulder = new Symbol(boulderPath);
@@ -32,9 +29,14 @@ for (var i = 0; i < count; i++) {
   var center = Point.random() * view.size;
 
 
-  var placedTrail = trail.place(center);
-  placedTrail.scale((i / count) * (max - min) + min);
-  placedTrail.addChild(boulder);
+  var placedBoulder = boulder.place([0,0]);
+  console.log("center", center);
+  console.log("placedBoulder.position", placedBoulder.position);
+  var placedTrail = trail.place([0, -15]);
+  var asteroidGroup = new Group([placedBoulder, placedTrail]);
+  asteroidGroup.scale((i / count) * (max - min) + min);
+  asteroidGroup.position = center;
+  // console.log(placedBoulder.addChild(trailPath));
 }
 
 var detectionPath = new Path.Rectangle({
@@ -58,6 +60,7 @@ player.importSVG(
 
 var tempo = 10;
 
+console.log(project.activeLayer.children);
 function onFrame(event) {
   for (var i = 0; i < count; i++) {
     var item = project.activeLayer.children[i];
