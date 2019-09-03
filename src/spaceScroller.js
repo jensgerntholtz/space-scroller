@@ -1,84 +1,89 @@
 import Paper from "paper";
-console.log("spaceScroller.js");
-var count = 20;
+Paper.install(window);
 
-var trailPath = new Path.Rectangle({
-  size: [5, 30],
-  fillColor: {
-    gradient: {
-      stops: [new Color(1, 1, 1, 0), new Color(1, 1, 1)]
-    },
-    origin: [0, 0],
-    destination: [0, 30]
+window.onload = () => {
+  Paper.setup("myCanvas");
+  console.log("spaceScroller.js");
+  var count = 20;
+
+  var trailPath = new Paper.Path.Rectangle({
+    size: [5, 30],
+    fillColor: {
+      gradient: {
+        stops: [new Paper.Color(1, 1, 1, 0), new Paper.Color(1, 1, 1)]
+      },
+      origin: [0, 0],
+      destination: [0, 30]
+    }
+  });
+
+  var boulderPath = new Paper.Shape.Circle(new Paper.Point(0, 0), 3);
+  boulderPath.fillColor = new Paper.Color(1, 1, 1);
+
+  var trail = new Paper.Symbol(trailPath);
+  var boulder = new Paper.Symbol(boulderPath);
+
+  // var asteroid = new Group([boulderPath,trailPath]);
+
+  var max = 2;
+  var min = 1;
+
+  // Place the instances of the symbol:
+  for (var i = 0; i < count; i++) {
+    // The center position is a random point in the view:
+    var center = Paper.Point.random() * Paper.view.size;
+
+    console.log(Paper.view.size);
+
+    var placedBoulder = boulder.place([0, 0]);
+    var placedTrail = trail.place([0, -15]);
+    var asteroidGroup = new Paper.Group([placedBoulder, placedTrail]);
+    asteroidGroup.scale((i / count) * (max - min) + min);
+    asteroidGroup.position = center;
+    // console.log(placedBoulder.addChild(trailPath));
   }
-});
 
-var boulderPath = new Shape.Circle(new Point(0, 0), 3);
-boulderPath.fillColor = "white";
+  var detectionPath = new Paper.Path.Rectangle({
+    point: Paper.view.center,
+    size: [80, 100]
+  });
 
-var trail = new Symbol(trailPath);
-var boulder = new Symbol(boulderPath);
-
-// var asteroid = new Group([boulderPath,trailPath]);
-
-var max = 2;
-var min = 1;
-
-// Place the instances of the symbol:
-for (var i = 0; i < count; i++) {
-  // The center position is a random point in the view:
-  var center = Point.random() * view.size;
-
-
-  var placedBoulder = boulder.place([0,0]);
-  var placedTrail = trail.place([0, -15]);
-  var asteroidGroup = new Group([placedBoulder, placedTrail]);
-  asteroidGroup.scale((i / count) * (max - min) + min);
-  asteroidGroup.position = center;
-  // console.log(placedBoulder.addChild(trailPath));
-}
-
-var detectionPath = new Path.Rectangle({
-  point: view.center,
-  size: [80, 100],
-  // fillColor: 'white'
-});
-
-var player = new Group([detectionPath]);
-player.importSVG(
-  "./src/cleanHornet.svg",
-  {
+  var player = new Paper.Group([detectionPath]);
+  player.importSVG("./src/cleanHornet.svg", {
     onLoad: function(item) {
-      item.center = view.center;
+      item.center = Paper.view.center;
       item.scale(0.1, 0.1);
       item.position = detectionPath.position;
-      svgItem = item;
+      Paper.svgItem = item;
     }
-  }
-);
+  });
 
-var tempo = 10;
+  var tempo = 10;
 
-console.log(project.activeLayer.children);
-function onFrame(event) {
-  for (var i = 0; i < count; i++) {
-    var item = project.activeLayer.children[i];
+  console.log(Paper.project.activeLayer.children);
 
-    item.position.y += item.bounds.height / tempo;
+  Paper.view.onFrame = (event) => {
+    for (var i = 0; i < count; i++) {
+      var item = Paper.project.activeLayer.children[i];
 
-    if (item.bounds.top > view.size.width) {
-      item.position.y = -item.bounds.height;
+
+      item.position.y += item.bounds.height / tempo;
+
+      if (item.bounds.top > Paper.view.size.width) {
+        item.position.y = -item.bounds.height;
+      }
+
+      if (detectionPath.intersects(item)) {
+        // console.log('HIT!!!');
+        // view.pause();
+        var detectionPathDistance = detectionPath.position.getDistance(
+          item.position
+        );
+
+        player.position.x +=
+          detectionPathDistance / (detectionPath.position.x - item.position.x);
+      }
     }
-
-    if (detectionPath.intersects(item)) {
-      // console.log('HIT!!!');
-      // view.pause();
-      var detectionPathDistance = detectionPath.position.getDistance(
-        item.position
-      );
-
-      player.position.x +=
-        detectionPathDistance / (detectionPath.position.x - item.position.x);
-    }
-  }
-}
+  };
+  Paper.view.draw();
+};
