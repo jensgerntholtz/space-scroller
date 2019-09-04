@@ -1,4 +1,5 @@
 import Paper from "paper";
+import shipSVG from "./cleanHornet.svg";
 Paper.install(window);
 
 window.onload = () => {
@@ -50,7 +51,7 @@ window.onload = () => {
   });
 
   var player = new Paper.Group([detectionPath]);
-  player.importSVG("./src/cleanHornet.svg", {
+  player.importSVG(shipSVG, {
     onLoad: function(item) {
       item.center = Paper.view.center;
       item.scale(0.1, 0.1);
@@ -60,8 +61,6 @@ window.onload = () => {
   });
 
   var tempo = 10;
-
-  console.log(Paper.project.activeLayer.children);
 
   Paper.view.onFrame = (event) => {
     for (var i = 0; i < count; i++) {
