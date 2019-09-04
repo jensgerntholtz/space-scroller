@@ -2,5 +2,4 @@
 Bringing my Profile pic to live
 
 # Dependencies
-Paper.js (via cdn)
-webpack
+dev dependencies managed by npm
